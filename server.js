@@ -6,10 +6,12 @@ const routes = require("./src/routes/router");
 const { setupWebSocketServer } = require('./src/websocket/wsServer');
 const { default: mongoose } = require('mongoose');
 const {errorMiddleware} = require('./src/middlewares/errorHandler');
+const authenticateToken = require('./src/middlewares/authToken');
 
 const app = express();
 const server = http.createServer(app);
 const port = process.env.PORT || 8000;
+const ipAddress = process.env.IP_ADDRESS || '127.0.0.1';
 const corsOptions = {
 	origin: "*",
 	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -22,12 +24,13 @@ const mongoURI = process.env.MONGO_URI;
 app.use(express.json());
 app.use(cors(corsOptions));
 setupWebSocketServer(server);
+app.use(authenticateToken);
 app.use(routes);
 app.use(errorMiddleware);
 
 const startServer = () => {
-	server.listen(port, () => {
-		console.log(`Server is running on port ${port}`);
+	server.listen(port, ipAddress, () => {
+		console.log(`Server is running on ${ipAddress}:${port}`);
 	});	  
 }
 
