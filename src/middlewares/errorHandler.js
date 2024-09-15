@@ -7,14 +7,12 @@ const errorMiddleware = (err, req, res, next) => {
     console.log(err)
 
     const responseObj = {
-        title: err.title || "Not Catched",
-        status: err.statusCode || 500,
-        code: err.code || "APP_0000",
+        code: err.code || "NOT_CATCHED",
         messages: err.message || APP_ERROR_CODES.APP_0000,
         details: err.details || []
     };
 
-    res.status(responseObj.status).json(responseObj);
+    res.status(err.statusCode || 500).json(responseObj);
 }
 
 /*

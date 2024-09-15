@@ -5,10 +5,19 @@ const {ValidationError} = require('../models/Error')
 const validateParams = (schema) => {
     return (req, res, next) => {
         const {error} = schema.validate(req.body);
-
+        
         if(error) {
-            console.log(error.details)
-            next(new ValidationError("Invalid input data", error.details));
+            let details = [];
+
+            if(error.details){
+                details = error.details.map((detail) => ({
+                    message: detail.message,
+                    field: detail.context.key,
+                }));
+            }
+
+            // console.log(error.details)
+            next(new ValidationError("Invalid input data", details));
         } else {
             next();
         }

@@ -6,7 +6,7 @@ setup script:
 
 .env
 ```
-IP_ADDRESS=0.0.0.0
+IP_ADDRESS=localhost
 PORT=8000
 TEST=test
 JWT_SECRET=

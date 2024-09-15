@@ -17,7 +17,6 @@ class AppError extends Error {
      */
     constructor(options = {}) {
         const {
-            title = "APPLICATION ERROR",
             statusCode = 400, 
             code = "APP_0000", 
             message = "", 
@@ -25,7 +24,6 @@ class AppError extends Error {
         } = options;
 
         super(message || APP_ERROR_CODES[code]);
-        this.title = title;
         this.statusCode = statusCode;
         this.code = code;
         this.details = Array.isArray(details) ? details : [details];
@@ -39,11 +37,10 @@ class AppError extends Error {
 class ValidationError extends AppError {
     constructor(message, details = []) {
         super({
-            title: "Validation Error",
             statusCode: 400,
             code: "APP_0002",
             message: message || "Invalid input data",
-            details: details.map(valError => valError.message),
+            details: details,
         });
     }
 }
@@ -54,7 +51,6 @@ class ValidationError extends AppError {
 class NotFoundError extends AppError {
     constructor(message, details = []) {
         super({
-            title: "Not Found",
             statusCode: 404,
             code: "APP_0001",
             message: message || "Not Found",

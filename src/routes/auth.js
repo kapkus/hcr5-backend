@@ -18,11 +18,12 @@ router.post('/', validateParams(userValidator), async (req, res, next) => {
         if (!passwordMatch) {
             throw new AppError({title: "AUTHENTICATION ERROR", code: "AUTH_0000"});
         }
-        console.log(process.env.JWT_SECRET)
+
+        console.log(user)
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             // expiresIn: process.env.JWT_EXPIRE_TIME,
-            expiresIn: process.env.JWT_EXPIRE_TIME || '1h',
+            expiresIn: process.env.JWT_EXPIRE_TIME || '1h'
         });
         res.status(200).json({ token });
     } catch (err) {
