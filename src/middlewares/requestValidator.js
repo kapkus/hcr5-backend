@@ -16,7 +16,6 @@ const validateParams = (schema) => {
                 }));
             }
 
-            // console.log(error.details)
             next(new ValidationError("Invalid input data", details));
         } else {
             next();

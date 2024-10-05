@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     userType: { type: String, required: true },
     settings: {
         step: { type: Number, required: true },
+        interval: { type: Number, required: true }
     }
 });
 

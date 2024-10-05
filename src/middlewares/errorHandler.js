@@ -8,7 +8,7 @@ const errorMiddleware = (err, req, res, next) => {
 
     const responseObj = {
         code: err.code || "NOT_CATCHED",
-        messages: err.message || APP_ERROR_CODES.APP_0000,
+        msg: err.msg || APP_ERROR_CODES.APP_0000,
         details: err.details || []
     };
 
